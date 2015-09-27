@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package in.bits.sochat.server;
 
 import in.bits.sochat.bean.Message;
@@ -14,13 +9,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author tarun
+ * 
+ * ServerThread maintains the communication between the server and client.
  */
+
 class ServerThread extends Thread {
 
     private Server server;
     private Socket socket;
+    
+    /**
+     * ServerThread constructor maintain the reference of the socket of the connected client and of the server class (for calling server functions).
+     * @param server
+     * @param socket 
+     */
 
     public ServerThread(Server server, Socket socket) {
         this.server = server;
@@ -28,6 +30,10 @@ class ServerThread extends Thread {
         
         start();
     }
+    
+    /**
+     * Handles what action to perform when a certain type of message is received at the server.
+     */
 
     public void run() {
         try {

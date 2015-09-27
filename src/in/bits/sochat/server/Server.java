@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package in.bits.sochat.server;
 
 import in.bits.sochat.bean.Message;
@@ -18,26 +13,48 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author tarun
+ * 
+ * Server class contains functions which are called by the ServerThread class to perform server functions.
  */
+
+
 public class Server implements ServerInterface {
 
     private ServerSocket serverSocket;
     private HashMap<Socket, ObjectOutputStream> clients;
     private HashMap<String, Socket> clientList;
     private ServerUpdateThread sut;
-
+    
+    /**
+     * Constructor of the Server Class.
+     * Initiates the hash maps 'clients' and 'clientList'.
+     * 'clients' is used to store the object output stream related to a certain socket.
+     * 'clientList' is used to store the username corresponding to the socket of a client.
+     * Constructor calls the listen function in the Server class.
+     * @param port is used to start listening on a certain port.
+     * @throws IOException 
+     */
+    
     public Server(int port) throws IOException {
         clients = new HashMap<>();
         clientList = new HashMap<>();
 
         listen(port);
     }
+    
+    /**
+     * Setter for the hash map clientList
+     * @return the clientList
+     */
 
     public HashMap<String, Socket> getClientList() {
         return clientList;
     }
+    
+    /**
+     * listen opens a port and starts listening for communicating clients.
+     * @param port is used to open a socket on a certain port.
+     */
 
     @Override
     public void listen(int port) {
@@ -58,6 +75,11 @@ public class Server implements ServerInterface {
         }
 
     }
+    
+    /**
+     * broadcast function broadcasts the message to all the users connected to the group chat.
+     * @param message is what is sent to all the users.
+     */
 
     @Override
     public synchronized void broadcast(Message message) {
@@ -70,6 +92,11 @@ public class Server implements ServerInterface {
             }
         }
     }
+    
+    /**
+     * Closes the socket of an exiting client.
+     * @param socket to determine what client is exiting.
+     */
 
     @Override
     public void closeConnection(Socket socket) {
@@ -98,6 +125,10 @@ public class Server implements ServerInterface {
         }
 
     }
+    
+    /**
+     * Used to send the updated list of online users to all participating users.
+     */
 
     @Override
     public synchronized void sendClientList() {
@@ -110,6 +141,11 @@ public class Server implements ServerInterface {
         broadcast(new Message(Type.LIST, "server", list, null, null));
 
     }
+    
+    /**
+     * Used to send messages to a specific recipient, used for one on one communication.
+     * @param message is what is sent to the specified recipient.
+     */
 
     @Override
     public void unicast(Message message) {

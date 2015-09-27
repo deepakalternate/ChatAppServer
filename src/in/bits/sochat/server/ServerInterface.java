@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package in.bits.sochat.server;
 
 import in.bits.sochat.bean.Message;
 import java.net.Socket;
 
 /**
- *
- * @author tarun
+ * 
+ * Interface that defines the structure of the Server class.
  */
 public interface ServerInterface {
     public void listen(int port);
